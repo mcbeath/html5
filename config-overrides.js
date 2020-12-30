@@ -1,4 +1,19 @@
 const path = require('path');
+// const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+// const myPlugin = [
+//   new UglifyJsPlugin(
+//     {
+//       uglifyOptions: {
+//         warnings: false,
+//         compress: {
+//           drop_debugger: true,
+//           drop_console: true
+//         }
+//       }
+//     }
+//   )
+// ]
+process.env.GENERATE_SOURCEMAP = 'false';
 const {
   override,
   fixBabelImports,
@@ -63,7 +78,13 @@ module.exports = {
     ]),
     addLessLoader(),
     // 压缩js等
-    addCustomize()
+    // addCustomize(),
+    (config) => { //暴露webpack的配置 config ,evn
+      // console.log('config', config)
+      // process.env.GENERATE_SOURCEMAP = 'false';
+
+      return config
+    }
   ),
   // 本地启动配置，可以设置代理
   devServer: overrideDevServer(
